@@ -222,21 +222,27 @@ $('document').ready(function(){
 		
 		var i;
 
-		function msgLoop(i) {
-    $("p:nth-child(" + i + ")").fadeIn('slow').delay(4000).promise().done(function () {
-        $("p:nth-child(" + i + ")").fadeOut('fast', function() { // Fade out the current message *before* showing the next
-            i = i + 1;
-            if (i <= 50) {
-                msgLoop(i); // Call msgLoop to display the next message
-            } else {
-                $("p:nth-child(50)").fadeOut('fast').promise().done(function () {
-                    $('.cake').fadeIn('fast');
-                });
-            }
-        });
-    });
-}
+		function displayMessagesSequentially() {
+    let messageIndex = 1;
+    const totalMessages = 50;
 
+    function showNextMessage() {
+        if (messageIndex <= totalMessages) {
+            $("p:nth-child(" + messageIndex + ")").fadeIn('slow').delay(4000).promise().done(function () {
+                $("p:nth-child(" + messageIndex + ")").fadeOut('fast', function () {
+                    messageIndex++;
+                    showNextMessage(); // Call itself to continue the sequence
+                });
+            });
+        } else {
+            $("p:nth-child(" + totalMessages + ")").fadeOut('slow').promise().done(function () {
+                $('.cake').fadeIn('fast');
+            });
+        }
+    }
+
+    showNextMessage(); // Start the sequence
+}
 		
 		msgLoop(0);
 
