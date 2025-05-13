@@ -223,7 +223,7 @@ $('document').ready(function(){
 		var i;
 
 		function msgLoop(i) {
-    $("p:nth-child(" + i + ")").fadeIn('slow').delay(4000).promise().done(function () {
+    $("p:nth-child(" + i + ")").delay(4000).promise().done(function () {
         $("p:nth-child(" + i + ")").fadeOut('fast', function() { // Fade out the current message *before* showing the next
             i = i + 1;
             if (i <= 50) {
